@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
+using System.Data.SqlClient;
+
 
 namespace VideoClub
 {
@@ -10,20 +13,16 @@ namespace VideoClub
     {
         static void Main(string[] args)
         {
-            int menuChoice = 0;
-            do
-            {
-                Console.WriteLine("HOTEL BOUTIQUE");
-                Console.WriteLine("1. Login");
-                Console.WriteLine("2. Registrarse");
-                Console.WriteLine("3. salir");
-                Console.WriteLine("4. Check-out");
-                Console.WriteLine("5. Exit");
+            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+            SqlConnection conexion = new SqlConnection(connectionString);
+            string cadena;
+            SqlCommand comando;
 
-                menuChoice = Convert.ToInt32(Console.ReadLine());
-                Menu(menuChoice);
+            Logging l1 = new Logging();
+            l1.LogMenu();
+            
+            Console.ReadLine();
 
-            } while (menuChoice != 3);
         }
     }
 }
