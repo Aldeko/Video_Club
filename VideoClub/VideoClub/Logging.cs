@@ -49,12 +49,13 @@ namespace VideoClub
             } while (exit == false);
         }
 
-        private bool  Log(string user, string password)
+        private bool Log(string user, string password)
         {
             Console.WriteLine("Escribe usuario");
             user = Console.ReadLine();
             Console.WriteLine("Escribe contraseña");
             password = Console.ReadLine();
+
         }
     }
 }
