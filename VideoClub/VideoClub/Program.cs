@@ -18,8 +18,41 @@ namespace VideoClub
             string cadena;
             SqlCommand comando;
 
+            int logChoice;
+
+            Console.WriteLine("1.-Logging");
+            Console.WriteLine("2.-Registrarse");
+            Console.WriteLine("3.-Salir");
+            logChoice = Int32.Parse(Console.ReadLine());
+
             Logging l1 = new Logging();
-            l1.LogMenu();
+            Cliente c1 = new Cliente();
+
+            bool exit = false;
+            do
+            {
+                switch (logChoice)
+                {
+                    case 1:
+                        l1.Log();
+                        exit = true;
+                        break;
+
+                    case 2:
+                        c1.RegistrarCliente();
+                        exit = true;
+                        break;
+
+                    case 3:
+                        Console.WriteLine("Que tenga un buen día");
+                        exit = true;
+                        break;
+                }
+
+            } while (exit == false);
+        
+        
+            
             
             Console.ReadLine();
 

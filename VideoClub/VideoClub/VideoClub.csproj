@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Cliente.cs" />
     <Compile Include="Logging.cs" />
+    <Compile Include="Pelicula.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

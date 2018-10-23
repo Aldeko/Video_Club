@@ -26,39 +26,10 @@ namespace VideoClub
         {
             conexion = new SqlConnection(connectionString);
         }
-        public void LogMenu()
-        {
-            Console.WriteLine("1.-Logging");
-            Console.WriteLine("2.-Registrarse");
-            Console.WriteLine("3.-Salir");
-            logChoice = Int32.Parse(Console.ReadLine());
-
-            bool exit = false;
-            do
-            {
-                switch (logChoice)
-                {
-                    case 1:
-                        Log();
-                        exit = true;
-                        break;
-
-                    case 2:
-                        //Register();
-                        exit = true;
-                        break;
-
-                    case 3:
-                        Console.WriteLine("Que tenga un buen día");
-                        exit = true;
-                        break;
-                }
-
-            } while (exit == false);
-        }
+        
         //Vamos a crear un logging para eso pedimos email y contraseña
 
-        private void Log()
+        public void Log()
         {
             Console.WriteLine("Escribe email");
             string email = Console.ReadLine();
@@ -79,8 +50,11 @@ namespace VideoClub
             
             conexion.Close();
             Console.ReadLine();
-
         }
+
+        
+
+
     }
 }
 
