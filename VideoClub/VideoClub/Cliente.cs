@@ -78,6 +78,7 @@ namespace VideoClub
             SqlDataReader registros = comando.ExecuteReader();
             conexion.Close();
 
+
            
 
 

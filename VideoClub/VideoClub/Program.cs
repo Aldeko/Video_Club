@@ -20,40 +20,45 @@ namespace VideoClub
 
             int logChoice;
 
-            Console.WriteLine("1.-Logging");
-            Console.WriteLine("2.-Registrarse");
-            Console.WriteLine("3.-Salir");
-            logChoice = Int32.Parse(Console.ReadLine());
+            //Console.WriteLine("1.-Logging");
+            //Console.WriteLine("2.-Registrarse");
+            //Console.WriteLine("3.-Salir");
+            //logChoice = Int32.Parse(Console.ReadLine());
 
             Logging l1 = new Logging();
             Cliente c1 = new Cliente();
+            Pelicula p1 = new Pelicula();
 
-            bool exit = false;
-            do
-            {
-                switch (logChoice)
-                {
-                    case 1:
-                        l1.Log();
-                        exit = true;
-                        break;
+            p1.MostrarPeliculas();
+            Console.ReadLine();
 
-                    case 2:
-                        c1.RegistrarCliente();
-                        exit = true;
-                        break;
 
-                    case 3:
-                        Console.WriteLine("Que tenga un buen día");
-                        exit = true;
-                        break;
-                }
+            //bool exit = false;
+            //do
+            //{
+            //    switch (logChoice)
+            //    {
+            //        case 1:
+            //            l1.Log();
+            //            exit = true;
+            //            break;
 
-            } while (exit == false);
-        
-        
-            
-            
+            //        case 2:
+            //            c1.RegistrarCliente();
+            //            exit = true;
+            //            break;
+
+            //        case 3:
+            //            Console.WriteLine("Que tenga un buen día");
+            //            exit = true;
+            //            break;
+            //    }
+
+            //} while (exit == false);
+
+
+
+
             Console.ReadLine();
 
         }
