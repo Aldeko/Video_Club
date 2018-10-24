@@ -77,11 +77,11 @@ namespace VideoClub
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
             conexion.Close();
+        }
 
-
-           
-
-
+        public void CheckAge()
+        {
+            
         }
 
     }

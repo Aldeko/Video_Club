@@ -45,9 +45,12 @@ namespace VideoClub
 
             if (registros.Read())
             {
-                Console.WriteLine("El usuario existe");
+                Console.WriteLine("BIENVENIDO");
+                Console.WriteLine("**************");
+
+
             }
-            
+
             conexion.Close();
             Console.ReadLine();
         }

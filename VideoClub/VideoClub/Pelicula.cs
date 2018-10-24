@@ -15,15 +15,15 @@ namespace VideoClub
         string cadena;
         SqlCommand comando;
 
-        private string nombre, descripcion;
-        private int duracion, año, edadRecomendada;
+        private string nombre, descripcion, disponibilidad;
+        private int duracion, año, edadRecomendada, idPelicula;
 
         public Pelicula()
         {
             conexion = new SqlConnection(connectionString);
 
         }
-        public Pelicula(string nombre, int duracion, string descripcion, int año, int edadRecomendada)
+        public Pelicula(int idPelicula, string nombre, int duracion, string descripcion, int año, int edadRecomendada, string disponibilidad)
         {
             conexion = new SqlConnection(connectionString);
 
@@ -32,31 +32,67 @@ namespace VideoClub
             this.descripcion = descripcion;
             this.año = año;
             this.edadRecomendada = edadRecomendada;
+            this.disponibilidad = disponibilidad;
+            this.idPelicula = idPelicula;
         }
-
-        public void MostrarPeliculas()
+        //GETTERS AND SETTERS
+        public string GetNombre()
         {
-            conexion.Open();
-            cadena = "SELECT * FROM PELICULA";
-            comando = new SqlCommand(cadena, conexion);
-            SqlDataReader registros = comando.ExecuteReader();
-            while (registros.Read())
-            {
-                Console.WriteLine(registros["Nombre"].ToString());
-                Console.WriteLine("***************************");
-                Console.WriteLine("Duracion: " + registros["Duracion"].ToString());
-                Console.WriteLine(" ");
-                Console.WriteLine("Descripcion: " + registros["Descripcion"].ToString());
-                Console.WriteLine(" ");
-                Console.WriteLine("Año: " + registros["Año"].ToString());
-                Console.WriteLine(" ");
-                Console.WriteLine("Edad Recomendad: " + registros["Edad_recomendada"].ToString());
-                Console.WriteLine("***************************");
-                
-            }
-            conexion.Close();
-
-
+            return nombre;
         }
+        public void SetNombre(string nombre)
+        {
+            this.nombre = nombre;
+        }
+        public int GetDuracion()
+        {
+            return duracion;
+        }
+        public void SetDuracion(int duracion)
+        {
+            this.duracion = duracion;
+        }
+        public string GetDescripcion()
+        {
+            return descripcion;
+        }
+        public void SetDescripcion(string descripcion)
+        {
+            this.descripcion = descripcion;
+        }
+        public int GetAño()
+        {
+            return año;
+        }
+        public void SetAño(int año)
+        {
+            this.año = año;
+        }
+        public int GetEdadRecomendada()
+        {
+            return edadRecomendada;
+        }
+        public void SetEdadRecomendada(int edadRecomendada)
+        {
+            this.edadRecomendada = edadRecomendada;
+        }
+        public string GetDisponibilidad()
+        {
+            return disponibilidad;
+        }
+        public void SetDisponibilidad(string disponibilidad)
+        {
+            this.disponibilidad = disponibilidad;
+        }
+        public int GetIdPelicula()
+        {
+            return idPelicula;
+        }
+        public void SetIdPelicula(int idPelicula)
+        {
+            this.idPelicula = idPelicula;
+        }
+
+        
     }
 }
