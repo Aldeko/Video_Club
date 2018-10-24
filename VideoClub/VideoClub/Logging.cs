@@ -29,8 +29,9 @@ namespace VideoClub
         
         //Vamos a crear un logging para eso pedimos email y contraseña
 
-        public void Log()
+        public Cliente Log()
         {
+            Cliente cliente = null;
             Console.WriteLine("Escribe email");
             string email = Console.ReadLine();
             Console.WriteLine("Escribe contraseña");
@@ -47,12 +48,12 @@ namespace VideoClub
             {
                 Console.WriteLine("BIENVENIDO");
                 Console.WriteLine("**************");
-
-
+                string nombre = registros["nombre"].ToString();
+                cliente = new Cliente(nombre, , , );
             }
 
             conexion.Close();
-            Console.ReadLine();
+            return cliente;
         }
 
         

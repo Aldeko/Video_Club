@@ -13,6 +13,14 @@ namespace VideoClub
     {
         static void Main(string[] args)
         {
+            //DateTime dt1 = new DateTime(1990, 10, 20);
+            //DateTime dt2 = new DateTime(2000, 10, 19);
+            //TimeSpan ts = (dt2 - dt1);
+            //int dias = ts.Days;
+            //int years = dias / 365;
+            //Console.WriteLine(years);
+
+
             String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
             SqlConnection conexion = new SqlConnection(connectionString);
             string cadena;
@@ -28,27 +36,28 @@ namespace VideoClub
             Logging l1 = new Logging();
             Cliente c1 = new Cliente();
             Pelicula p1 = new Pelicula();
-            Alquiler a1 = new Alquiler();
+            //Alquiler a1 = new Alquiler();
 
-            //p1.MostrarPeliculas();
+            
             Console.ReadLine();
 
             bool exit = false;
+            Cliente cliente = null;
             do
             {
                 switch (logChoice)
                 {
                     case 1:
-                        l1.Log();
+                        cliente = l1.Log();
                         Console.ReadLine();
-                        MenuPrincipal();
+                        MenuPrincipal(cliente);
                         exit = true;
                         break;
 
                     case 2:
-                        c1.RegistrarCliente();
+                        cliente = c1.RegistrarCliente();
                         Console.ReadLine();
-                        MenuPrincipal();
+                        MenuPrincipal(cliente);
                         exit = true;
                         break;
 
@@ -64,7 +73,7 @@ namespace VideoClub
 
         }
 
-        public static void MenuPrincipal()
+        public static void MenuPrincipal(Cliente cliente)
         {
             int menuChoice = 0;
             do
@@ -75,14 +84,14 @@ namespace VideoClub
                 Console.WriteLine("4.-Devolver Pelicula");
                 Console.WriteLine("5.-Log out");
                 menuChoice = Int32.Parse(Console.ReadLine());
-                Menu(menuChoice);
+                Menu(menuChoice, cliente);
                 Console.ReadLine();
             } while (menuChoice != 5);
 
 
         }
 
-        public static void MostrarPeliculas()
+        public static void MostrarPeliculas(Cliente cliente)
         {
 
 
@@ -111,13 +120,15 @@ namespace VideoClub
                 List<Pelicula> listaPelicula = new List<Pelicula>();
                 listaPelicula.Add(p);
 
-                Console.WriteLine("ID: " + idPelicula + " ========> " + nombre);
+                Cliente c = new Cliente();
+                c.CheckAge(cliente);
+                Console.WriteLine("ID: " + idPelicula + " ========> " + nombre + " " + disponibilidad);
             }
             conexion.Close();
 
         }
 
-        public static void Menu(int Choice)
+        public static void Menu(int Choice, Cliente cliente)
         {
             bool exit = false;
             do
@@ -125,7 +136,7 @@ namespace VideoClub
                 switch (Choice)
                 {
                     case 1:
-                        MostrarPeliculas();
+                        MostrarPeliculas(cliente);
                         exit = true;
                         break;
 

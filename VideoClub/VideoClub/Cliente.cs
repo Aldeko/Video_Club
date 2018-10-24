@@ -10,8 +10,8 @@ namespace VideoClub
 {
     class Cliente
     {
-        private string nombre, apellido;
-        private int id;
+        private string nombre, email, contraseña;
+        private int fechaNac;
 
         String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
         SqlConnection conexion;
@@ -23,13 +23,12 @@ namespace VideoClub
             conexion = new SqlConnection(connectionString);
 
         }
-        public Cliente(string nombre, string apellido, int id)
+        public Cliente(string nombre, int fechaNac, string email, string contraseña)
         {
-            conexion = new SqlConnection(connectionString);
-
+            this.fechaNac = fechaNac;
+            this.email = email;
+            this.contraseña = contraseña;
             this.nombre = nombre;
-            this.apellido = apellido;
-            this.id = id;
         }
         
         //GET & SET
@@ -42,46 +41,62 @@ namespace VideoClub
         {
             this.nombre = nombre;
         }
-        public string GetApellido()
+        public string GetEmail()
         {
-            return apellido;
+            return email;
         }
-        public void SetApellido(string apellido)
+        public void SetEmail(string email)
         {
-            this.apellido = apellido;
+            this.email = email;
         }
-        public int GetId()
+        public int GetFechaNac()
         {
-            return id;
+            return fechaNac;
         }
-        public void SetId(int id)
+        public void SetFechaNac(int fechaNac)
         {
-            this.id = id;
+            this.fechaNac = fechaNac;
+        }
+        public string GetContraseña()
+        {
+            return contraseña;
+        }
+        public void SetContraseña(string contraseña)
+        {
+            this.contraseña = contraseña;
         }
 
-        public  void RegistrarCliente()
+        public  Cliente RegistrarCliente()
         {
 
             Console.WriteLine("REGISTRARSE" + "\n*****************************");
             Console.WriteLine("Introduce tu nombre");
             string nombre = Console.ReadLine();
             Console.WriteLine("Introduce tu fecha de nacimiento (aaaa-mm-dd)");
-            string fechaNac = Console.ReadLine();
+            fechaNac = Int32.Parse(Console.ReadLine());
             Console.WriteLine("Introduce tu email");
             string email = Console.ReadLine();
             Console.WriteLine("Introduce una contraseña");
             string contraseña = Console.ReadLine();
 
+            Cliente cliente = new Cliente(nombre, fechaNac , email, contraseña);
             conexion.Open();
             cadena = "INSERT INTO CLIENTE (Nombre, Fecha_nac, Email, Contraseña ) VALUES  ('" + nombre + "','" + fechaNac + "','" + email + "','" + contraseña + "')";
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
             conexion.Close();
+            return cliente;
         }
 
-        public void CheckAge()
+        public void CheckAge(Cliente cliente)
         {
             
+            DateTime dt1 = new DateTime(cliente.fechaNac);
+            DateTime dt2 = new DateTime(2000,01,01);
+            TimeSpan ts = (dt2 - dt1);
+            int dias = ts.Days;
+            int years = dias / 365;
+      
         }
 
     }
