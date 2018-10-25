@@ -92,7 +92,7 @@ namespace VideoClub
         {
             
             DateTime dt1 = new DateTime(cliente.fechaNac);
-            DateTime dt2 = new DateTime(2000,01,01);
+            DateTime dt2 = new DateTime.
             TimeSpan ts = (dt2 - dt1);
             int dias = ts.Days;
             int years = dias / 365;
