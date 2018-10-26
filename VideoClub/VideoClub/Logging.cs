@@ -26,37 +26,38 @@ namespace VideoClub
         {
             conexion = new SqlConnection(connectionString);
         }
-        
+
         //Vamos a crear un logging para eso pedimos email y contraseña
 
-        public Cliente Log()
-        {
-            Cliente cliente = null;
-            Console.WriteLine("Escribe email");
-            string email = Console.ReadLine();
-            Console.WriteLine("Escribe contraseña");
-            string contraseña = Console.ReadLine();
+        //public Cliente Log()
+        //{
+        //    Cliente cliente = null;
+        //    Console.WriteLine("Escribe email");
+        //    string email = Console.ReadLine();
+        //    Console.WriteLine("Escribe contraseña");
+        //    string contraseña = Console.ReadLine();
+            
 
-            conexion.Open();
+        //    conexion.Open();
 
-            //Comparar datos introducidos con Base de Datos
-            cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='"+email+"') AND (Contraseña='"+ contraseña +"')";
-            comando = new SqlCommand(cadena, conexion);
-            SqlDataReader registros= comando.ExecuteReader();
+        //    //Comparar datos introducidos con Base de Datos
+        //    cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
+        //    comando = new SqlCommand(cadena, conexion);
+        //    SqlDataReader registros = comando.ExecuteReader();
 
-            if (registros.Read())
-            {
-                Console.WriteLine("BIENVENIDO");
-                Console.WriteLine("**************");
-                string nombre = registros["nombre"].ToString();
-                cliente = new Cliente(nombre, , , );
-            }
+        //    if (registros.Read())
+        //    {
+        //        Console.WriteLine("BIENVENIDO");
+        //        Console.WriteLine("**************");
+        //        string nombre = registros["nombre"].ToString();
+        //        cliente = new Cliente(nombre, fechaNac, email, contraseña);
+        //    }
 
-            conexion.Close();
-            return cliente;
-        }
+        //    conexion.Close();
+        //    return cliente;
+        //}
 
-        
+
 
 
     }

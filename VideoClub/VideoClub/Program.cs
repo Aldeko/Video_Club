@@ -11,20 +11,13 @@ namespace VideoClub
 {
     class Program
     {
+            static String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+            static SqlConnection conexion = new SqlConnection(connectionString);
+            static string cadena;
+            static SqlCommand comando;
         static void Main(string[] args)
         {
-            //DateTime dt1 = new DateTime(1990, 10, 20);
-            //DateTime dt2 = new DateTime(2000, 10, 19);
-            //TimeSpan ts = (dt2 - dt1);
-            //int dias = ts.Days;
-            //int years = dias / 365;
-            //Console.WriteLine(years);
-
-
-            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
-            SqlConnection conexion = new SqlConnection(connectionString);
-            string cadena;
-            SqlCommand comando;
+            
 
             int logChoice;
 
@@ -48,14 +41,14 @@ namespace VideoClub
                 switch (logChoice)
                 {
                     case 1:
-                        cliente = l1.Log();
-                        Console.ReadLine();
+                        Loguear();
+                        
                         MenuPrincipal(cliente);
                         exit = true;
                         break;
 
                     case 2:
-                        cliente = c1.RegistrarCliente();
+                        RegistroCliente();
                         Console.ReadLine();
                         MenuPrincipal(cliente);
                         exit = true;
@@ -72,7 +65,44 @@ namespace VideoClub
             Console.ReadLine();
 
         }
+        public static void RegistroCliente()
+        {
+            Console.WriteLine("REGISTRARSE" + "\n*****************************");
+            Console.WriteLine("Introduce tu nombre");
+            string nombre = Console.ReadLine();
+            Console.WriteLine("Introduce tu fecha de nacimiento (aaaa-mm-dd)");
+            DateTime fechaNac = Convert.ToDateTime(Console.ReadLine());
+            Console.WriteLine("Introduce tu email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Introduce una contraseña");
+            string contraseña = Console.ReadLine();
 
+            Cliente cliente = new Cliente(nombre, fechaNac, email, contraseña);
+            cliente.RegistrarCliente(cliente);
+        }
+        public static void Loguear()
+        {
+            Console.WriteLine("Escribe email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Escribe contraseña");
+            string contraseña = Console.ReadLine();
+            conexion.Open();
+            cadena = "SELECT Fecha_nac FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
+            comando = new SqlCommand(cadena, conexion);
+            SqlDataReader registros = comando.ExecuteReader();
+            
+            DateTime fecha;
+            Cliente cliente=new Cliente();
+            if (registros.Read())
+            {
+                fecha = Convert.ToDateTime(registros["Fecha_nac"].ToString());
+                cliente= new Cliente(email, contraseña, fecha);
+
+            }
+            registros.Close();
+            conexion.Close();
+            MenuPrincipal(cliente);
+        }
         public static void MenuPrincipal(Cliente cliente)
         {
             int menuChoice = 0;
@@ -94,13 +124,12 @@ namespace VideoClub
         public static void MostrarPeliculas(Cliente cliente)
         {
 
-
             String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
             SqlConnection conexion = new SqlConnection(connectionString);
             string cadena;
             SqlCommand comando;
             conexion.Open();
-            cadena = "SELECT * FROM PELICULA";
+            cadena = "SELECT * FROM PELICULA where edad_recomendada<=" + cliente.CheckAge(cliente);
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
 
@@ -120,9 +149,18 @@ namespace VideoClub
                 List<Pelicula> listaPelicula = new List<Pelicula>();
                 listaPelicula.Add(p);
 
-                Cliente c = new Cliente();
-                c.CheckAge(cliente);
-                Console.WriteLine("ID: " + idPelicula + " ========> " + nombre + " " + disponibilidad);
+                foreach (Pelicula x in listaPelicula)
+                {
+                    Console.WriteLine(" ID Pelicula: " + x.GetIdPelicula() + "   Nombre pelicula==>  " + nombre );
+                }
+                //else if (c.CheckAge(cliente) > 16 && c.CheckAge(cliente) < 16)
+                //{
+
+                //}
+                //else if(c.CheckAge(cliente)>18)
+                //{
+
+                //}
             }
             conexion.Close();
 

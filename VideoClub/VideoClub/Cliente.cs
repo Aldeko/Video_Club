@@ -11,8 +11,8 @@ namespace VideoClub
     class Cliente
     {
         private string nombre, email, contraseña;
-        private int fechaNac;
-
+        private DateTime fechaNac;
+        private DateTime fechaNacimiento;
         String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
         SqlConnection conexion;
         string cadena;
@@ -23,14 +23,21 @@ namespace VideoClub
             conexion = new SqlConnection(connectionString);
 
         }
-        public Cliente(string nombre, int fechaNac, string email, string contraseña)
+        public Cliente(string nombre, DateTime fechaNac, string email, string contraseña)
         {
             this.fechaNac = fechaNac;
             this.email = email;
             this.contraseña = contraseña;
             this.nombre = nombre;
+            conexion = new SqlConnection(connectionString);
         }
-        
+        //constructor  loggin
+        public Cliente(string email, string contraseña, DateTime fechaNacimiento)
+        {
+            this.email = email;
+            this.contraseña = contraseña;
+            this.fechaNacimiento = fechaNacimiento;
+        }
         //GET & SET
 
         public string GetNombre()
@@ -49,11 +56,11 @@ namespace VideoClub
         {
             this.email = email;
         }
-        public int GetFechaNac()
+        public DateTime GetFechaNac()
         {
             return fechaNac;
         }
-        public void SetFechaNac(int fechaNac)
+        public void SetFechaNac(DateTime fechaNac)
         {
             this.fechaNac = fechaNac;
         }
@@ -65,38 +72,57 @@ namespace VideoClub
         {
             this.contraseña = contraseña;
         }
-
-        public  Cliente RegistrarCliente()
+        public DateTime GetFechaNacimiento()
         {
-
-            Console.WriteLine("REGISTRARSE" + "\n*****************************");
-            Console.WriteLine("Introduce tu nombre");
-            string nombre = Console.ReadLine();
-            Console.WriteLine("Introduce tu fecha de nacimiento (aaaa-mm-dd)");
-            fechaNac = Int32.Parse(Console.ReadLine());
-            Console.WriteLine("Introduce tu email");
-            string email = Console.ReadLine();
-            Console.WriteLine("Introduce una contraseña");
-            string contraseña = Console.ReadLine();
-
-            Cliente cliente = new Cliente(nombre, fechaNac , email, contraseña);
+            return fechaNacimiento;
+        }
+        public  Cliente RegistrarCliente(Cliente c)
+        {           
             conexion.Open();
             cadena = "INSERT INTO CLIENTE (Nombre, Fecha_nac, Email, Contraseña ) VALUES  ('" + nombre + "','" + fechaNac + "','" + email + "','" + contraseña + "')";
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
             conexion.Close();
+            return c;
+        }
+        public Cliente Log()
+        {
+            Cliente cliente = null;
+            Console.WriteLine("Escribe email");
+            string email = Console.ReadLine();
+            Console.WriteLine("Escribe contraseña");
+            string contraseña = Console.ReadLine();
+            
+
+            conexion.Open();
+
+            //Comparar datos introducidos con Base de Datos
+            cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
+            comando = new SqlCommand(cadena, conexion);
+            SqlDataReader registros = comando.ExecuteReader();
+
+            if (registros.Read())
+            {
+                Console.WriteLine("BIENVENIDO");
+                Console.WriteLine("**************");
+                string nombre = registros["nombre"].ToString();
+                cliente = new Cliente(nombre, fechaNac, email, contraseña);
+            }
+
+            conexion.Close();
             return cliente;
         }
-
-        public void CheckAge(Cliente cliente)
+        public int CheckAge(Cliente cliente)
         {
-            
-            DateTime dt1 = new DateTime(cliente.fechaNac);
-            DateTime dt2 = new DateTime.
+
+            DateTime dt1 = cliente.GetFechaNacimiento();
+            DateTime dt2 = new DateTime();
+            dt2 = DateTime.Now;
             TimeSpan ts = (dt2 - dt1);
             int dias = ts.Days;
             int years = dias / 365;
-      
+            
+            return years;
         }
 
     }
