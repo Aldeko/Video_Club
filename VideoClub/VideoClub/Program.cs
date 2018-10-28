@@ -157,6 +157,7 @@ namespace VideoClub
                 foreach (Pelicula x in listaPelicula)
                 {
                     Console.WriteLine(" ID Pelicula: " + x.GetIdPelicula() + "   Nombre pelicula==>  " + nombre + "   " + disponibilidad);
+                    
                 }
                 //else if (c.CheckAge(cliente) > 16 && c.CheckAge(cliente) < 16)
                 //{
@@ -188,10 +189,10 @@ namespace VideoClub
                         a1.RentFilm(cliente);
                         exit = true;
                         break;
-                    //case 3:
-                    //    check_in();
-                    //    exit = true;
-                    //    break;
+                    case 3:
+                        MisAlquileres(cliente);
+                        exit = true;
+                        break;
 
                     case 4:
                         Alquiler a2 = new Alquiler();
@@ -207,6 +208,25 @@ namespace VideoClub
                 }
 
             } while (exit == false);
+        }
+
+        public static void MisAlquileres(Cliente cliente)
+        {
+            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+            SqlConnection conexion = new SqlConnection(connectionString);
+            string cadena;
+            SqlCommand comando;
+            conexion.Open();
+            cadena= "SELECT Fecha_alquiler, Fecha_devolucion, idCliente FROM ALQUILER WHERE idCliente=" + cliente.GetIdCliente() ;
+            comando = new SqlCommand(cadena, conexion);
+            SqlDataReader registro = comando.ExecuteReader();
+            
+            while (registro.Read())
+            {
+                Console.WriteLine(registro["Fecha_alquiler"].ToString() + "\t" + registro["Fecha_devolucion"].ToString() + "\t" + registro["idCliente"].ToString());
+            }
+            conexion.Close();
+            
         }
     }
 }

@@ -11,6 +11,17 @@ namespace VideoClub
     class Alquiler
     {
         private string idPelicula;
+        private DateTime fechaAlquiler, fechaDevolucion;
+
+        
+        public DateTime GetFechaAlquiler()
+        {
+            return fechaAlquiler;
+        }
+        public DateTime GetFechaDevolucion()
+        {
+            return fechaDevolucion;
+        }
 
         public void RentFilm(Cliente cliente)
         {
