@@ -139,7 +139,7 @@ namespace VideoClub
         public int CheckAge(Cliente cliente)
         {
 
-            DateTime dt1 = cliente.GetFechaNacimiento();
+            DateTime dt1 = cliente.GetFechaNac();
             DateTime dt2 = new DateTime();
             dt2 = DateTime.Now;
             TimeSpan ts = (dt2 - dt1);

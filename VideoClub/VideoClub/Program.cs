@@ -43,7 +43,7 @@ namespace VideoClub
                     case 1:
                         Loguear();
                         
-                        MenuPrincipal(cliente);
+                        
                         exit = true;
                         break;
 
@@ -102,11 +102,11 @@ namespace VideoClub
                 fecha = Convert.ToDateTime(registros["Fecha_nac"].ToString());
                 int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
                 cliente = new Cliente(nombre, fecha, email, contraseña, idCliente);
-
+                MenuPrincipal(cliente);
             }
             registros.Close();
             conexion.Close();
-            MenuPrincipal(cliente);
+            
         }
         public static void MenuPrincipal(Cliente cliente)
         {
