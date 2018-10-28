@@ -24,12 +24,24 @@ namespace VideoClub
             conexion = new SqlConnection(connectionString);
 
         }
+        public Cliente(string nombre, DateTime fechaNac, string email, string contraseña, int idCliente)
+        {
+            this.fechaNac = fechaNac;
+            this.email = email;
+            this.contraseña = contraseña;
+            this.nombre = nombre;
+            this.idCliente = idCliente;
+            
+            conexion = new SqlConnection(connectionString);
+        }
         public Cliente(string nombre, DateTime fechaNac, string email, string contraseña)
         {
             this.fechaNac = fechaNac;
             this.email = email;
             this.contraseña = contraseña;
-            this.nombre = nombre;           
+            this.nombre = nombre;
+            
+
             conexion = new SqlConnection(connectionString);
         }
         //constructor  loggin
@@ -38,6 +50,8 @@ namespace VideoClub
             this.email = email;
             this.contraseña = contraseña;
             this.fechaNacimiento = fechaNacimiento;
+            this.idCliente = idCliente;
+            
         }
         //GET & SET
 
@@ -77,6 +91,14 @@ namespace VideoClub
         {
             return fechaNacimiento;
         }
+        public int GetIdCliente()
+        {
+            return idCliente;
+        }
+        public void SetIdCliente(int idCliente)
+        {
+            this.idCliente = idCliente;
+        }
         public  Cliente RegistrarCliente(Cliente c)
         {           
             conexion.Open();
@@ -107,7 +129,8 @@ namespace VideoClub
                 Console.WriteLine("BIENVENIDO");
                 Console.WriteLine("**************");
                 string nombre = registros["nombre"].ToString();
-                cliente = new Cliente(nombre, fechaNac, email, contraseña);
+                int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
+                cliente = new Cliente(nombre, fechaNac, email, contraseña, idCliente);
             }
 
             conexion.Close();

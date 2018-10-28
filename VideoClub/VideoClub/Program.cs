@@ -95,6 +95,7 @@ namespace VideoClub
             Cliente cliente=new Cliente();
             if (registros.Read())
             {
+                
                 fecha = Convert.ToDateTime(registros["Fecha_nac"].ToString());
                 cliente= new Cliente(email, contraseña, fecha);
 
@@ -180,7 +181,7 @@ namespace VideoClub
 
                     case 2:
                         Alquiler a1 = new Alquiler();
-                        a1.RentFilm();
+                        a1.RentFilm(cliente);
                         exit = true;
                         break;
                     //case 3:

@@ -63,7 +63,8 @@ namespace VideoClub
                 conexion.Close();
 
                 conexion.Open();
-                cadena = "INSERT INTO ALQUILER (IDpelicula, Fecha_alquiler, IDcliente ) VALUES ('" + idPelicula + "','" + DateTime.Now + "','" + idCliente +"') ";
+               
+                cadena = "INSERT INTO ALQUILER (IDpelicula, Fecha_alquiler, IDcliente ) VALUES ('" + idPelicula + "','" + DateTime.Now + "','" + cliente.GetIdCliente() +"') ";
                 comando = new SqlCommand(cadena, conexion);
                 comando.ExecuteNonQuery();
 
@@ -110,12 +111,7 @@ namespace VideoClub
                 comando = new SqlCommand(cadena, conexion);
                 comando.ExecuteNonQuery();
                 conexion.Close();
-
-                conexion.Open();
-                cadena = "UPDATE ALQUILER SET IDcliente = idCliente WHERE IDpelicula like'" + idPelicula + "'";
-                comando = new SqlCommand(cadena, conexion);
-                comando.ExecuteNonQuery();
-                conexion.Close();
+                
 
             }
         }
