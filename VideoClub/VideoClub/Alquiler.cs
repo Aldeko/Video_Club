@@ -1,90 +1,123 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using System.Data.SqlClient;
-//using System.Configuration;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Data.SqlClient;
+using System.Configuration;
 
-//namespace VideoClub
-//{
-//    class Alquiler
-//    {
-//        private string idPelicula;
+namespace VideoClub
+{
+    class Alquiler
+    {
+        private string idPelicula;
 
-//        public void RentFilm()
-//        {
-//            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
-//            SqlConnection conexion = new SqlConnection(connectionString);
-//            string cadena;
-//            SqlCommand comando;
+        public void RentFilm(Cliente cliente)
+        {
+            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+            SqlConnection conexion = new SqlConnection(connectionString);
+            string cadena;
+            SqlCommand comando;
 
-//            //BUSCAMOS EL ID DE LA PELICULA
+            //BUSCAMOS EL ID DE LA PELICULA
 
-//            Console.WriteLine("Introduzca el ID de la pelicula que quieres alquilar");
-//            idPelicula = Console.ReadLine();
+            Console.WriteLine("Introduzca el ID de la pelicula que quieres alquilar");
+            idPelicula = Console.ReadLine();
 
-//            conexion.Open();
+            conexion.Open();
 
-//            cadena = "SELECT * FROM Pelicula WHERE IDpelicula LIKE '" + idPelicula + "'";
-//            comando = new SqlCommand(cadena, conexion);
-//            SqlDataReader registros = comando.ExecuteReader();
-
-
-//            if (registros.Read())
-//            {
-
-//                conexion.Close();
-//                Console.WriteLine("Tu pelicula esta disponible");
-
-//                //HACEMOS UNA CONSULTA A LA TABLA PELICULA
-//                conexion.Open();
-//                cadena = "SELECT * FROM Habitacion WHERE Estado like 'libre'";
-//                comando = new SqlCommand(cadena, conexion);
-//                SqlDataReader habitacion = comando.ExecuteReader();
-
-//                while (habitacion.Read())
-//                {
-//                    Console.WriteLine(habitacion["CodHabitacion"].ToString() + "\t" + habitacion["Estado"].ToString());
-
-//                }
-//                habitacion.Close();
-//                conexion.Close();
+            cadena = "SELECT * FROM Pelicula WHERE IDpelicula LIKE '" + idPelicula + "'";
+            comando = new SqlCommand(cadena, conexion);
+            SqlDataReader registros = comando.ExecuteReader();
 
 
-//                Console.WriteLine("Elija su habitación");
+            if (registros.Read())
+            {
 
-//                //CREAR EL CÓDIGO DE RESERVA
-//                conexion.Open();
-//                cadena = "SELECT max(CodReserva) FROM Reserva";
-//                comando = new SqlCommand(cadena, conexion);
-//                SqlDataReader codReservaR = comando.ExecuteReader();
-//                int codReserva = Convert.ToInt32(codReservaR.Read()) + 1;
-//                conexion.Close();
-//                int codHabitacion = Convert.ToInt32(Console.ReadLine());
+                conexion.Close();
+                
 
-//                conexion.Open();
-//                cadena = "UPDATE Habitacion SET Estado = 'ocupado' WHERE CodHabitacion like'" + codHabitacion + "'";
-//                comando = new SqlCommand(cadena, conexion);
-//                comando.ExecuteNonQuery();
-//                conexion.Close();
+                //HACEMOS UNA CONSULTA A LA TABLA PELICULA
+                conexion.Open();
+                cadena = "SELECT * FROM PELICULA WHERE Disponibilidad like 'LIBRE'";
+                comando = new SqlCommand(cadena, conexion);
+                SqlDataReader pelicula = comando.ExecuteReader();
 
-//                conexion.Open();
-//                cadena = "INSERT INTO Reserva (CodReserva, CodHabitacion, DNI, Check_in ) VALUES ('" + codReserva + "','" + codHabitacion + "','" + dni + "','" + DateTime.Now + "') ";
-//                comando = new SqlCommand(cadena, conexion);
-//                comando.ExecuteNonQuery();
+                while (pelicula.Read())
+                {
+                    Console.WriteLine(pelicula["IDpelicula"].ToString() + "\t" + pelicula["Disponibilidad"].ToString());
 
-//                conexion.Close();
-//                Console.WriteLine("Su habitación ha sido reservada");
+                }
+                pelicula.Close();
+                conexion.Close();
 
-//            }
-//            else
-//            {
-//                Console.WriteLine("El cliente no está registrado, no se puede realizar la reserva");
-//            }
 
-//            conexion.Close();
-//            return;
-//        }
-//    }
-//}
+                
+
+                //CAMBIAR DISPONIBILIDAD
+
+                conexion.Open();
+                cadena = "UPDATE PELICULA SET Disponibilidad = 'OCUPADO' WHERE IDpelicula like'" + idPelicula + "'";
+                comando = new SqlCommand(cadena, conexion);
+                comando.ExecuteNonQuery();
+                conexion.Close();
+
+                conexion.Open();
+                cadena = "INSERT INTO ALQUILER (IDpelicula, Fecha_alquiler, IDcliente ) VALUES ('" + idPelicula + "','" + DateTime.Now + "','" + idCliente +"') ";
+                comando = new SqlCommand(cadena, conexion);
+                comando.ExecuteNonQuery();
+
+                conexion.Close();
+                Console.WriteLine("Su Pelicula ha sido alquilada");
+
+            }
+            else
+            {
+                Console.WriteLine("Esa pelicula no existe");
+            }
+
+            conexion.Close();
+            return;
+        }
+
+        public void ReturnMovie()
+        {
+            String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
+            SqlConnection conexion = new SqlConnection(connectionString);
+            string cadena;
+            SqlCommand comando;
+
+            Console.WriteLine("Introduzca el ID de la pelicula que quieres Devolver");
+            idPelicula = Console.ReadLine();
+
+            conexion.Open();
+
+            cadena = "SELECT * FROM ALQUILER WHERE IDpelicula LIKE '" + idPelicula + "'";
+            comando = new SqlCommand(cadena, conexion);
+            SqlDataReader registros = comando.ExecuteReader();
+            if (registros.Read())
+            {
+
+                conexion.Close();
+                conexion.Open();
+                cadena = "UPDATE ALQUILER SET Fecha_devolucion= GETDATE() WHERE IDpelicula like'" + idPelicula + "'"; ;
+                comando = new SqlCommand(cadena, conexion);
+                comando.ExecuteNonQuery();
+                conexion.Close();
+
+                conexion.Open();
+                cadena = "UPDATE PELICULA SET Disponibilidad = 'LIBRE' WHERE IDpelicula like'" + idPelicula + "'";
+                comando = new SqlCommand(cadena, conexion);
+                comando.ExecuteNonQuery();
+                conexion.Close();
+
+                conexion.Open();
+                cadena = "UPDATE ALQUILER SET IDcliente = idCliente WHERE IDpelicula like'" + idPelicula + "'";
+                comando = new SqlCommand(cadena, conexion);
+                comando.ExecuteNonQuery();
+                conexion.Close();
+
+            }
+        }
+    }
+}

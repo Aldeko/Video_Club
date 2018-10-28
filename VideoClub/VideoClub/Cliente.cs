@@ -13,6 +13,7 @@ namespace VideoClub
         private string nombre, email, contraseña;
         private DateTime fechaNac;
         private DateTime fechaNacimiento;
+        int idCliente;
         String connectionString = ConfigurationManager.ConnectionStrings["conexion"].ConnectionString;
         SqlConnection conexion;
         string cadena;
@@ -28,7 +29,7 @@ namespace VideoClub
             this.fechaNac = fechaNac;
             this.email = email;
             this.contraseña = contraseña;
-            this.nombre = nombre;
+            this.nombre = nombre;           
             conexion = new SqlConnection(connectionString);
         }
         //constructor  loggin

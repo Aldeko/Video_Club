@@ -151,7 +151,7 @@ namespace VideoClub
 
                 foreach (Pelicula x in listaPelicula)
                 {
-                    Console.WriteLine(" ID Pelicula: " + x.GetIdPelicula() + "   Nombre pelicula==>  " + nombre );
+                    Console.WriteLine(" ID Pelicula: " + x.GetIdPelicula() + "   Nombre pelicula==>  " + nombre + "   " + disponibilidad);
                 }
                 //else if (c.CheckAge(cliente) > 16 && c.CheckAge(cliente) < 16)
                 //{
@@ -178,19 +178,21 @@ namespace VideoClub
                         exit = true;
                         break;
 
-                    //case 2:
-                    //    Alquiler();
-                    //    exit = true;
-                    //    break;
+                    case 2:
+                        Alquiler a1 = new Alquiler();
+                        a1.RentFilm();
+                        exit = true;
+                        break;
                     //case 3:
                     //    check_in();
                     //    exit = true;
                     //    break;
 
-                    //case 4:
-                    //    check_out();
-                    //    exit = true;
-                    //    break;
+                    case 4:
+                        Alquiler a2 = new Alquiler();
+                        a2.ReturnMovie();
+                        exit = true;
+                        break;
 
                     case 5:
                         Console.WriteLine("Eskerrikasko eta Edarto ibili");
