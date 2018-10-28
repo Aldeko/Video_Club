@@ -87,7 +87,7 @@ namespace VideoClub
             Console.WriteLine("Escribe contraseña");
             string contraseña = Console.ReadLine();
             conexion.Open();
-            cadena = "SELECT Fecha_nac FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
+            cadena = "SELECT Fecha_nac, Nombre, idCliente FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
             
@@ -95,9 +95,13 @@ namespace VideoClub
             Cliente cliente=new Cliente();
             if (registros.Read())
             {
-                
+                Console.WriteLine("BIENVENIDO");
+                Console.WriteLine("**************");
+
+                string nombre = registros["Nombre"].ToString();
                 fecha = Convert.ToDateTime(registros["Fecha_nac"].ToString());
-                cliente= new Cliente(email, contraseña, fecha);
+                int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
+                cliente = new Cliente(nombre, fecha, email, contraseña, idCliente);
 
             }
             registros.Close();

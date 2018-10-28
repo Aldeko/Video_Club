@@ -108,34 +108,34 @@ namespace VideoClub
             conexion.Close();
             return c;
         }
-        public Cliente Log()
-        {
-            Cliente cliente = null;
-            Console.WriteLine("Escribe email");
-            string email = Console.ReadLine();
-            Console.WriteLine("Escribe contraseña");
-            string contraseña = Console.ReadLine();
-            
+        //public Cliente Log()
+        //{
+        //    Cliente cliente = null;
+        //    Console.WriteLine("Escribe email");
+        //    string email = Console.ReadLine();
+        //    Console.WriteLine("Escribe contraseña");
+        //    string contraseña = Console.ReadLine();
 
-            conexion.Open();
 
-            //Comparar datos introducidos con Base de Datos
-            cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
-            comando = new SqlCommand(cadena, conexion);
-            SqlDataReader registros = comando.ExecuteReader();
+        //    conexion.Open();
 
-            if (registros.Read())
-            {
-                Console.WriteLine("BIENVENIDO");
-                Console.WriteLine("**************");
-                string nombre = registros["nombre"].ToString();
-                int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
-                cliente = new Cliente(nombre, fechaNac, email, contraseña, idCliente);
-            }
+        //    //Comparar datos introducidos con Base de Datos
+        //    cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
+        //    comando = new SqlCommand(cadena, conexion);
+        //    SqlDataReader registros = comando.ExecuteReader();
 
-            conexion.Close();
-            return cliente;
-        }
+        //    if (registros.Read())
+        //    {
+        //        Console.WriteLine("BIENVENIDO");
+        //        Console.WriteLine("**************");
+        //        string nombre = registros["nombre"].ToString();
+        //        int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
+        //        cliente = new Cliente(nombre, fechaNac, email, contraseña, idCliente);
+        //    }
+
+        //    conexion.Close();
+        //    return cliente;
+        //}
         public int CheckAge(Cliente cliente)
         {
 
@@ -145,7 +145,7 @@ namespace VideoClub
             TimeSpan ts = (dt2 - dt1);
             int dias = ts.Days;
             int years = dias / 365;
-            
+
             return years;
         }
 
