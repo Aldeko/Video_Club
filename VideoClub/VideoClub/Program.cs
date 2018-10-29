@@ -26,10 +26,7 @@ namespace VideoClub
             Console.WriteLine("3.-Salir");
             logChoice = Int32.Parse(Console.ReadLine());
 
-            Logging l1 = new Logging();
-            Cliente c1 = new Cliente();
-            Pelicula p1 = new Pelicula();
-            //Alquiler a1 = new Alquiler();
+            
 
             
             Console.ReadLine();
@@ -41,9 +38,7 @@ namespace VideoClub
                 switch (logChoice)
                 {
                     case 1:
-                        Loguear();
-                        
-                        
+                        Loguear();                    
                         exit = true;
                         break;
 
