@@ -38,7 +38,7 @@ namespace VideoClub
                 switch (logChoice)
                 {
                     case 1:
-                        Loguear();                    
+                        Loguear();
                         exit = true;
                         break;
 

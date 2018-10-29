@@ -99,43 +99,16 @@ namespace VideoClub
         {
             this.idCliente = idCliente;
         }
-        public  Cliente RegistrarCliente(Cliente c)
-        {           
+        public Cliente RegistrarCliente(Cliente cliente)
+        {
             conexion.Open();
             cadena = "INSERT INTO CLIENTE (Nombre, Fecha_nac, Email, Contraseña ) VALUES  ('" + nombre + "','" + fechaNac + "','" + email + "','" + contraseña + "')";
             comando = new SqlCommand(cadena, conexion);
             SqlDataReader registros = comando.ExecuteReader();
             conexion.Close();
-            return c;
+            return cliente;
         }
-        //public Cliente Log()
-        //{
-        //    Cliente cliente = null;
-        //    Console.WriteLine("Escribe email");
-        //    string email = Console.ReadLine();
-        //    Console.WriteLine("Escribe contraseña");
-        //    string contraseña = Console.ReadLine();
 
-
-        //    conexion.Open();
-
-        //    //Comparar datos introducidos con Base de Datos
-        //    cadena = "SELECT Email, Contraseña FROM Cliente WHERE (Email='" + email + "') AND (Contraseña='" + contraseña + "')";
-        //    comando = new SqlCommand(cadena, conexion);
-        //    SqlDataReader registros = comando.ExecuteReader();
-
-        //    if (registros.Read())
-        //    {
-        //        Console.WriteLine("BIENVENIDO");
-        //        Console.WriteLine("**************");
-        //        string nombre = registros["nombre"].ToString();
-        //        int idCliente = Convert.ToInt32(registros["idCliente"].ToString());
-        //        cliente = new Cliente(nombre, fechaNac, email, contraseña, idCliente);
-        //    }
-
-        //    conexion.Close();
-        //    return cliente;
-        //}
         public int CheckAge(Cliente cliente)
         {
 
